@@ -10,10 +10,11 @@ const scopes = "playlist-read-private playlist-modify-private playlist-modify-pu
 
 const allArgs = [
     { name: "id", long: "id", short: "id", description: "The URL/ID of the playlist" },
-    { name: "clientId", long: "client-id", short: "cid", description: "Client ID to use" },
-    { name: "overwrite", long: "overwrite", short: "o", description: "Overwrite current playlist" },
     { name: "name", long: "name", short: "n", description: "New playlist name" },
     { name: "description", long: "description", short: "d", description: "New playlist description" },
+    { name: "public", long: "public", short: "p", description: "Make playlist public" },
+    { name: "overwrite", long: "overwrite", short: "o", description: "Overwrite current playlist" },
+    { name: "clientId", long: "client-id", short: "cid", description: "Client ID to use" },
     { name: "port", long: "port", short: "port", description: `Port to use when authorizing (default: ${port})` },
     { name: "redirectUri", long: "redirect-uri", short: "url", description: `Redirect URI to use when authorizing (default: ${redirectUri})` },
     { name: "noRefresh", long: "no-refresh", short: "nr", description: "Don't save refresh token for later" },
@@ -111,7 +112,8 @@ function createPlaylist(userId, name, description) {
             },
             body: JSON.stringify({
                 name,
-                description
+                description,
+                public: args.public === undefined ? false : true
             })
         }).then(i => i.json());
         resolve(playlist);
